@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  ubuntu_dev:
+    build: .
+    image: ubuntu:dev
+    network_mode: "host"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    container_name: ubuntu_dev
+    stdin_open: true
+    tty: true
