@@ -2,7 +2,13 @@ FROM ubuntu:18.04
 
 RUN apt-get update
 RUN apt-get install -y curl docker.io
-RUN apt-get install -y zsh nano
+RUN apt-get install -y zsh nano apt-transport-https gnupg sudo
+
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
+RUN apt-get update
+RUN apt-get install -y kubectl
 
 RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
   && chmod +x minikube
@@ -17,6 +23,9 @@ RUN usermod -a -G root admin
 RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 RUN chmod +x /usr/local/bin/docker-compose
+
+RUN mkdir -p "/home/admin/.minikube/cache" && \
+  chown -R admin:admin "/home/admin/.minikube"
 
 USER admin
 

@@ -6,6 +6,11 @@ services:
     network_mode: "host"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - home_admin_projects:/home/admin/Projects
+      - home_admin_cache:/home/admin/.minikube/cache
     container_name: ubuntu_dev
     stdin_open: true
     tty: true
+volumes:
+  home_admin_projects:
+  home_admin_cache:
